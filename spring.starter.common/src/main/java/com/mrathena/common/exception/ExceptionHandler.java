@@ -139,9 +139,9 @@ public final class ExceptionHandler {
 		log.info(message);
 		log.error(message, exception);
 		if (ExceptionHandler.isDubboTimeoutException(exception)) {
-			return RemoteServiceException.timeout("接口调用超时");
+			return RemoteServiceException.timeout("服务调用超时");
 		} else if (ExceptionHandler.isDubboUnavailableException(exception)) {
-			return RemoteServiceException.unavailable("接口服务不可用");
+			return RemoteServiceException.unavailable("服务不可用");
 		} else if (exception instanceof RemoteServiceException) {
 			return (RemoteServiceException) exception;
 		} else {
