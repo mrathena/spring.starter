@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+		PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<properties resource="/mybatis.generator/mybatis.generator.properties"/>
+	<classPathEntry location="${ds.driver.path}"/>
+	<context id="mysql" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<property name="autoDelimitKeywords" value="true"/>
+		<property name="beginningDelimiter" value="`"/>
+		<property name="endingDelimiter" value="`"/>
+		<plugin type="org.mybatis.generator.plugins.LombokModelClassPlugin"/>
+		<commentGenerator type="org.mybatis.generator.internal.ExtendedCommentGenerator">
+			<property name="author" value="mrathena"/>
+		</commentGenerator>
+
+		<jdbcConnection driverClass="${ds.driver-class-name}"
+						connectionURL="${ds.url}"
+						userId="${ds.username}"
+						password="${ds.password}"/>
+
+		<javaModelGenerator targetPackage="${target.entity.package}"
+							targetProject="${target.java.path}">
+			<property name="rootClass" value="${target.entity.base.class}"/>
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="${target.mapper.path}"
+						 targetProject="${target.resource.path}">
+		</sqlMapGenerator>
+		<javaClientGenerator
+				targetPackage="${target.mapper.package}"
+				targetProject="${target.java.path}" type="XMLMAPPER">
+		</javaClientGenerator>
+
+		<table tableName="t_mission_message_notify"
+			   domainObjectName="MissionMessageNotifyDO"
+			   mapperName="MissionMessageNotifyMapper"
+			   sqlProviderName="MissionMessageNotifyMapper"
+			   enableCountByExample="false"
+			   enableUpdateByExample="false"
+			   enableDeleteByExample="false"
+			   enableSelectByExample="false"
+			   selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false"/>
+			<generatedKey column="id" sqlStatement="JDBC"/>
+		</table>
+
+		<!-- MySQL写法 -->
+		<!-- <table tableName="car" domainObjectName="Car" enableCountByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false" enableUpdateByExample="false" 
+			enableDeleteByExample="false"> <property name="useActualColumnNames" value="false" 
+			/> </table> -->
+
+		<!-- Oracle写法 -->
+		<!-- <table tableName="AUDIT" alias="audit" schema="jsh" enableCountByExample="false" 
+			enableSelectByExample="false" selectByExampleQueryId="false" enableUpdateByExample="false" 
+			enableDeleteByExample="false"> <generatedKey column="ID" sqlStatement="select 
+			JSH.MERCHANT_BUSINESS_AUDIT_seq.nextval from dual" /> </table> -->
+	</context>
+</generatorConfiguration>

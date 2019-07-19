@@ -138,14 +138,14 @@ public final class ExceptionHandler {
 		String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(exception);
 		log.info(message);
 		log.error(message, exception);
-		if (ExceptionHandler.isDubboTimeoutException(exception)) {
-			return RemoteServiceException.timeout("服务调用超时");
-		} else if (ExceptionHandler.isDubboUnavailableException(exception)) {
-			return RemoteServiceException.unavailable("服务不可用");
+		if (ExceptionHandler.isDubboUnavailableException(exception)) {
+			return RemoteServiceException.unavailable("接口服务不可用");
+		} else if (ExceptionHandler.isDubboTimeoutException(exception)) {
+			return RemoteServiceException.timeout("接口调用超时");
 		} else if (exception instanceof RemoteServiceException) {
 			return (RemoteServiceException) exception;
 		} else {
-			return new ServiceException(exception.getMessage());
+			return new ServiceException(ExceptionCode.INTEGRATION_ERROR.name(), exception.getMessage());
 		}
 	}
 

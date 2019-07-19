@@ -63,6 +63,15 @@ public final class RemoteServiceException extends RuntimeException {
 	}
 
 	/**
+	 * 判断RemoteServiceException是否是不可用异常
+	 * ExceptionHandler#isDubboUnavailableException(java.lang.Exception)
+	 */
+	public boolean isUnavailable() {
+		return ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.name().equals(code);
+	}
+
+	/**
+	 * 判断RemoteServiceException是否是超时异常
 	 * ExceptionHandler#isDubboTimeoutException(java.lang.Exception)
 	 */
 	public boolean isTimeout() {
@@ -70,10 +79,10 @@ public final class RemoteServiceException extends RuntimeException {
 	}
 
 	/**
-	 * ExceptionHandler#isDubboUnavailableException(java.lang.Exception)
+	 * 判断RemoteServiceException是否是失败异常
 	 */
-	public boolean isUnavailable() {
-		return ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.name().equals(code);
+	public boolean isFailure() {
+		return ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name().equals(code);
 	}
 
 }
