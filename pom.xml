@@ -12,9 +12,10 @@
 	<modules>
 		<module>spring.starter.common</module>
 		<module>spring.starter.dao</module>
+		<module>spring.starter.manager</module>
 		<module>spring.starter.integration</module>
 		<module>spring.starter.api</module>
-		<module>spring.starter.business</module>
+		<module>spring.starter.biz</module>
 		<module>spring.starter.service</module>
 		<module>spring.starter.task</module>
 		<module>spring.starter.web</module>
@@ -35,6 +36,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mrathena</groupId>
+				<artifactId>spring.starter.manager</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.mrathena</groupId>
 				<artifactId>spring.starter.integration</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -45,7 +51,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mrathena</groupId>
-				<artifactId>spring.starter.business</artifactId>
+				<artifactId>spring.starter.biz</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
