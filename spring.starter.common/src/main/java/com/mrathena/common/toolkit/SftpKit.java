@@ -186,12 +186,7 @@ public class SftpKit {
 					// 下载文件
 					InputStream is = sftp.get(filename);
 					File file = new File(localDirectory, filename);
-					boolean fileSuccessName = download(is, file);
-					if (fileSuccessName) {
-						fileNameList.add(file.getName());
-					} else {
-						fileNameFailList.add(file.getName());
-					}
+					download(is, file);
 				}
 			}
 			fileNameMap.put("SUCCESS", fileNameList);
@@ -252,7 +247,7 @@ public class SftpKit {
 			}
 			// 切换工作路径
 			try {
-				sftp.cd(directory);
+				sftp.cd("/");
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
