@@ -13,11 +13,15 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.bestpay</groupId>
+			<groupId>com.mrathena</groupId>
+			<artifactId>spring.starter.callback</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.mrathena</groupId>
 			<artifactId>spring.starter.service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.bestpay</groupId>
+			<groupId>com.mrathena</groupId>
 			<artifactId>spring.starter.task</artifactId>
 		</dependency>
 	</dependencies>

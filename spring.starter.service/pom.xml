@@ -12,9 +12,10 @@
 	<artifactId>spring.starter.service</artifactId>
 
 	<dependencies>
+		<!--module-->
 		<dependency>
-			<groupId>com.bestpay</groupId>
-			<artifactId>spring.starter.business</artifactId>
+			<groupId>com.mrathena</groupId>
+			<artifactId>spring.starter.biz</artifactId>
 		</dependency>
 	</dependencies>
 
