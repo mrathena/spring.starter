@@ -12,6 +12,7 @@
 	<!--@RestController,@PostMapping的生效依赖该配置-->
 	<mvc:annotation-driven/>
 
+	<!--支持json转化-->
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 
 </beans>  
