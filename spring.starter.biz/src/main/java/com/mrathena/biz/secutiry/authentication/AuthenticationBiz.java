@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class AuthenticationBiz {
 
 	public AuthenticateResDTO authenticate(AuthenticateReqDTO request) {
+		System.out.println(request);
 		boolean equals = request.getUsername().equals(request.getPassword());
 		return new AuthenticateResDTO().setUsername(equals ? "true" : "false");
 	}

@@ -29,6 +29,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			Response<AuthenticateResDTO> response = new Response<>(authenticate);
 			return response;
 		} catch (Exception e) {
+			String description = ExceptionHandler.getClassAndMessage(e);
+			log.error(description, e);
 			return ExceptionHandler.handleBizException(e);
 		}
 	}
