@@ -11,5 +11,22 @@
 
 	<artifactId>spring.starter.api</artifactId>
 
+	<dependencies>
+		<!--modules-->
+		<dependency>
+			<groupId>com.mrathena</groupId>
+			<artifactId>spring.starter.common</artifactId>
+		</dependency>
+		<!--tool-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+
+	</dependencies>
 
 </project>
