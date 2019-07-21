@@ -1,6 +1,9 @@
 package com.mrathena.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,9 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("index")
 public class IndexController {
 
-	@GetMapping("index")
-	public String index() {
-		return "Hello World";
+	@PostMapping("index")
+	public Object index() {
+		return new User("mrathena", 27L);
 	}
 
+}
+
+@Getter
+@Setter
+@AllArgsConstructor
+class User {
+	private String username;
+	private Long age;
 }
