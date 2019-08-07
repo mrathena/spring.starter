@@ -16,7 +16,7 @@
 		<!--modules-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>spring.starter.notify</artifactId>
+			<artifactId>spring.starter.message</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mrathena</groupId>
