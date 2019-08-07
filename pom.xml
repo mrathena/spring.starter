@@ -220,7 +220,7 @@
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
 				<version>1.18.6</version>
-				<!--provided不会被传递-->
+				<!--provided和test不会被传递-->
 				<!--<scope>provided</scope>-->
 			</dependency>
 			<dependency>
