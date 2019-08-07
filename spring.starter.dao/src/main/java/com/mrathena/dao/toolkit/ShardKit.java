@@ -3,9 +3,9 @@ package com.mrathena.dao.toolkit;
 import com.google.common.collect.Range;
 import com.mrathena.common.exception.ExceptionCode;
 import com.mrathena.common.exception.ServiceException;
-import io.shardingsphere.api.algorithm.sharding.PreciseShardingValue;
-import io.shardingsphere.api.algorithm.sharding.RangeShardingValue;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
+import org.apache.shardingsphere.api.sharding.standard.RangeShardingValue;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

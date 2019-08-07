@@ -140,9 +140,9 @@
 				<version>5.1.10</version>
 			</dependency>
 			<dependency>
-				<groupId>io.shardingsphere</groupId>
+				<groupId>org.apache.shardingsphere</groupId>
 				<artifactId>sharding-jdbc-spring-namespace</artifactId>
-				<version>3.1.0</version>
+				<version>4.0.0-RC1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mybatis.generator</groupId>
@@ -234,6 +234,11 @@
 				<version>2.0.1.Final</version>
 			</dependency>
 			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>6.0.17.Final</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 				<version>3.9</version>
@@ -242,11 +247,6 @@
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
 				<version>4.3</version>
-			</dependency>
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-validator</artifactId>
-				<version>6.0.17.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
@@ -292,8 +292,7 @@
 				<version>2.27.0</version>
 				<scope>test</scope>
 			</dependency>
-			<!--公司其他部门-->
-
+			<!--其他部门-->
 
 		</dependencies>
 	</dependencyManagement>
