@@ -16,7 +16,7 @@
 		<module>spring.starter.integration</module>
 		<module>spring.starter.api</module>
 		<module>spring.starter.biz</module>
-		<module>spring.starter.callback</module>
+		<module>spring.starter.notify</module>
 		<module>spring.starter.service</module>
 		<module>spring.starter.task</module>
 		<module>spring.starter.web</module>
@@ -57,7 +57,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mrathena</groupId>
-				<artifactId>spring.starter.callback</artifactId>
+				<artifactId>spring.starter.notify</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

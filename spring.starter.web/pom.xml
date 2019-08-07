@@ -16,7 +16,7 @@
 		<!--modules-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>spring.starter.callback</artifactId>
+			<artifactId>spring.starter.notify</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mrathena</groupId>
