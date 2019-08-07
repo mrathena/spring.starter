@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<properties resource="/mybatis.generator/mybatis.generator.properties"/>
-	<classPathEntry location="${ds.driver.path}"/>
+	<classPathEntry location="${datasource.driver.path}"/>
 	<context id="mysql" targetRuntime="MyBatis3">
 		<property name="javaFileEncoding" value="UTF-8"/>
 		<property name="autoDelimitKeywords" value="true"/>
@@ -16,10 +16,10 @@
 			<property name="author" value="mrathena"/>
 		</commentGenerator>
 
-		<jdbcConnection driverClass="${ds.driver-class-name}"
-						connectionURL="${ds.url}"
-						userId="${ds.username}"
-						password="${ds.password}"/>
+		<jdbcConnection driverClass="${datasource.driver-class-name}"
+						connectionURL="${datasource.url}"
+						userId="${datasource.username}"
+						password="${datasource.password}"/>
 
 		<javaModelGenerator targetPackage="${target.entity.package}"
 							targetProject="${target.java.path}">
@@ -33,10 +33,10 @@
 				targetProject="${target.java.path}" type="XMLMAPPER">
 		</javaClientGenerator>
 
-		<table tableName="t_mission_message_notify"
-			   domainObjectName="MissionMessageNotifyDO"
-			   mapperName="MissionMessageNotifyMapper"
-			   sqlProviderName="MissionMessageNotifyMapper"
+		<table tableName="customer"
+			   domainObjectName="CustomerDO"
+			   mapperName="CustomerMapper"
+			   sqlProviderName="CustomerMapper"
 			   enableCountByExample="false"
 			   enableUpdateByExample="false"
 			   enableDeleteByExample="false"

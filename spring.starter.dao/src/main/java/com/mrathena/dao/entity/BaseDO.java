@@ -11,10 +11,10 @@ import java.util.Date;
 /**
  * @author mrathena on 2019/5/25 18:16
  */
-@Accessors(chain = true)
 @Setter
 @Getter
 @ToString
+@Accessors(chain = true)
 public class BaseDO implements Serializable {
 
 	private Long id;
@@ -24,5 +24,6 @@ public class BaseDO implements Serializable {
 	private String updatedBy;
 
 }
+
 
 
