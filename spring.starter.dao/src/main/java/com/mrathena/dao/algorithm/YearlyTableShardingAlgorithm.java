@@ -15,7 +15,7 @@ import java.util.Collection;
  * @author mrathena on 2019/6/22 12:17
  */
 @Slf4j
-public class YearlyShardingAlgorithm implements PreciseShardingAlgorithm<String>, RangeShardingAlgorithm<String> {
+public class YearlyTableShardingAlgorithm implements PreciseShardingAlgorithm<String>, RangeShardingAlgorithm<String> {
 
 	/**
 	 * 精确分片算法, 支持 = IN

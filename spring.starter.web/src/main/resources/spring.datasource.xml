@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:sharding="http://shardingsphere.apache.org/schema/shardingsphere/sharding"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx.xsd
+	   http://shardingsphere.apache.org/schema/shardingsphere/sharding
+	   http://shardingsphere.apache.org/schema/shardingsphere/sharding/sharding.xsd">
 
+	<!--原始数据源-->
 	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
 		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/mrathena"/>
@@ -11,8 +18,39 @@
 		<property name="password" value="Hhsrv587.."/>
 	</bean>
 
+	<!--分片数据源-->
+	<sharding:data-source id="shardingDatasource">
+		<sharding:sharding-rule data-source-names="datasource" default-data-source-name="datasource">
+			<sharding:table-rules>
+				<sharding:table-rule logic-table="sharding_table_demo_yearly"
+									 actual-data-nodes="datasource.sharding_table_demo_yearly_"
+									 table-strategy-ref="yearlyTableShardingStrategy"/>
+				<sharding:table-rule logic-table="sharding_table_demo_monthly"
+									 actual-data-nodes="datasource.sharding_table_demo_monthly_"
+									 table-strategy-ref="monthlyTableShardingStrategy"/>
+				<sharding:table-rule logic-table="sharding_table_demo_daily"
+									 actual-data-nodes="datasource.sharding_table_demo_daily_"
+									 table-strategy-ref="dailyTableShardingStrategy"/>
+			</sharding:table-rules>
+		</sharding:sharding-rule>
+		<sharding:props>
+			<prop key="sql.show">false</prop>
+		</sharding:props>
+	</sharding:data-source>
+
+	<!--动态数据源,原始数据源为默认数据源-->
+	<bean id="dynamicDatasource" class="com.mrathena.dao.toolkit.DynamicDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="datasource" value-ref="datasource"/>
+				<entry key="shardingDatasource" value-ref="shardingDatasource"/>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="datasource"/>
+	</bean>
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="datasource"/>
+		<property name="dataSource" ref="dynamicDatasource"/>
 		<property name="mapperLocations" value="classpath*:mapper/**/*Mapper.xml"/>
 		<property name="configuration">
 			<bean class="org.apache.ibatis.session.Configuration">
@@ -33,8 +71,25 @@
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="datasource"/>
+		<property name="dataSource" ref="dynamicDatasource"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!--常用分表算法-->
+	<bean id="yearlyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.YearlyTableShardingAlgorithm"/>
+	<bean id="monthlyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.MonthlyTableShardingAlgorithm"/>
+	<bean id="dailyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.DailyTableShardingAlgorithm"/>
+	<bean id="preciseMatchTableShardingAlgorithm" class="com.mrathena.dao.algorithm.PreciseMatchTableShardingAlgorithm"/>
+
+	<!--常用分表策略,要求:分表键字段为:shard,如果是按日期分表,则shard类型为varchar长度为8,值为yyyyMMdd-->
+	<sharding:standard-strategy id="yearlyTableShardingStrategy" sharding-column="shard"
+								precise-algorithm-ref="yearlyTableShardingAlgorithm"
+								range-algorithm-ref="yearlyTableShardingAlgorithm"/>
+	<sharding:standard-strategy id="monthlyTableShardingStrategy" sharding-column="shard"
+								precise-algorithm-ref="monthlyTableShardingAlgorithm"
+								range-algorithm-ref="monthlyTableShardingAlgorithm"/>
+	<sharding:standard-strategy id="dailyTableShardingStrategy" sharding-column="shard"
+								precise-algorithm-ref="dailyTableShardingAlgorithm"
+								range-algorithm-ref="dailyTableShardingAlgorithm"/>
 
 </beans>

@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * @author mrathena on 2019/6/22 12:19
  */
-public class MonthlyShardingAlgorithm implements PreciseShardingAlgorithm<String>, RangeShardingAlgorithm<String> {
+public class MonthlyTableShardingAlgorithm implements PreciseShardingAlgorithm<String>, RangeShardingAlgorithm<String> {
 
 	/**
 	 * 精确分片算法, 支持 = IN

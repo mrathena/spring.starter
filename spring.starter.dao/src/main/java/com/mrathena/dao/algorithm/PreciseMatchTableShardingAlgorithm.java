@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author mrathena on 2019/6/22 12:27
  */
-public class PreciseMatchShardingAlgorithm implements PreciseShardingAlgorithm<String> {
+public class PreciseMatchTableShardingAlgorithm implements PreciseShardingAlgorithm<String> {
 
 	/**
 	 * 精确分片算法, 支持 = IN
