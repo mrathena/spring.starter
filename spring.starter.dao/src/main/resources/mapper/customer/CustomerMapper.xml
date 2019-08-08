@@ -108,4 +108,7 @@
 			nickname = #{nickname,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
+	<select id="selectByCellphone" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from customer where cellphone = #{cellphone}
+	</select>
 </mapper>

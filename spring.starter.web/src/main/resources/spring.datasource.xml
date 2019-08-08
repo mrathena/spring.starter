@@ -3,12 +3,15 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
 	   xmlns:sharding="http://shardingsphere.apache.org/schema/shardingsphere/sharding"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/tx
 	   http://www.springframework.org/schema/tx/spring-tx.xsd
 	   http://shardingsphere.apache.org/schema/shardingsphere/sharding
-	   http://shardingsphere.apache.org/schema/shardingsphere/sharding/sharding.xsd">
+	   http://shardingsphere.apache.org/schema/shardingsphere/sharding/sharding.xsd
+	   http://www.springframework.org/schema/aop
+	   https://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!--原始数据源-->
 	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
@@ -39,7 +42,7 @@
 	</sharding:data-source>
 
 	<!--动态数据源,原始数据源为默认数据源-->
-	<bean id="dynamicDatasource" class="com.mrathena.dao.toolkit.DynamicDataSource">
+	<bean id="dynamicDatasource" class="com.mrathena.dao.toolkit.datasource.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
 				<entry key="datasource" value-ref="datasource"/>
@@ -48,6 +51,16 @@
 		</property>
 		<property name="defaultTargetDataSource" ref="datasource"/>
 	</bean>
+
+	<!--动态切换数据源的切面-->
+	<bean id="dynamicDataSourceAspect" class="com.mrathena.dao.toolkit.datasource.DynamicDataSourceAspect"/>
+	<aop:config>
+		<aop:aspect ref="dynamicDataSourceAspect">
+			<aop:pointcut id="pointcut" expression="execution(* com.mrathena.manager.*.*(..))"/>
+			<aop:before method="before" pointcut-ref="pointcut"/>
+			<aop:after method="after" pointcut-ref="pointcut"/>
+		</aop:aspect>
+	</aop:config>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDatasource"/>

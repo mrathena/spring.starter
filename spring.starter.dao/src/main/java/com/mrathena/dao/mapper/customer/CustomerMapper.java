@@ -2,6 +2,8 @@ package com.mrathena.dao.mapper.customer;
 
 import com.mrathena.dao.entity.customer.CustomerDO;
 
+import java.util.List;
+
 /**
  * customer
  *
@@ -56,4 +58,13 @@ public interface CustomerMapper {
 	 * @return .
 	 */
 	int updateByPrimaryKey(CustomerDO record);
+
+	/**
+	 * selectByCellphone
+	 *
+	 * @param cellphone .
+	 * @return .
+	 */
+	List<CustomerDO> selectByCellphone(String cellphone);
+
 }
