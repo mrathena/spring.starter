@@ -15,12 +15,10 @@ public class DynamicDataSourceHolder {
 	private static final ThreadLocal<String> DATASOURCE = new ThreadLocal<>();
 
 	public static String get() {
-		log.info("获取到数据源Key:{}", DATASOURCE.get());
 		return DATASOURCE.get();
 	}
 
 	public static void set(DynamicDataSource.Key datasource) {
-		log.info("设置了数据源Key:{}", datasource.getCode());
 		DATASOURCE.set(datasource.getCode());
 	}
 

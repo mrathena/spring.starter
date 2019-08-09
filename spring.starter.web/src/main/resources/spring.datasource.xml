@@ -37,7 +37,7 @@
 			</sharding:table-rules>
 		</sharding:sharding-rule>
 		<sharding:props>
-			<prop key="sql.show">false</prop>
+			<prop key="sql.show">true</prop>
 		</sharding:props>
 	</sharding:data-source>
 
@@ -55,12 +55,13 @@
 	<!--动态切换数据源的切面-->
 	<bean id="dynamicDataSourceAspect" class="com.mrathena.dao.toolkit.datasource.DynamicDataSourceAspect"/>
 	<aop:config>
-		<aop:pointcut id="pointcut" expression="execution(* com.mrathena.manager.*.*(..))"/>
+		<aop:pointcut id="pointcut" expression="within(com.mrathena.manager..*)"/>
 		<aop:aspect ref="dynamicDataSourceAspect">
 			<aop:before method="before" pointcut-ref="pointcut"/>
 			<aop:after method="after" pointcut-ref="pointcut"/>
 		</aop:aspect>
 	</aop:config>
+	<aop:aspectj-autoproxy/>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dynamicDatasource"/>

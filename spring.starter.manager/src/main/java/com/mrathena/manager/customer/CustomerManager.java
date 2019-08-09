@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * @author mrathena on 2019/8/9 1:18
  */
-@ShardingDataSource
 @Component
+@ShardingDataSource
 public class CustomerManager {
 
 	@Autowired

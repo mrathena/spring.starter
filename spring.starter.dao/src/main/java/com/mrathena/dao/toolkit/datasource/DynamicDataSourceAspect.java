@@ -25,15 +25,22 @@ public class DynamicDataSourceAspect {
 		if (clazz.isAnnotationPresent(ShardingDataSource.class)) {
 			DynamicDataSourceHolder.set(DynamicDataSource.Key.SHARDING);
 		}
-
 	}
 
 	/**
 	 * 后置通知
 	 */
-	public void after() {
-//		DynamicDataSourceHolder.set(DynamicDataSource.Key.DEFAULT);
-		DynamicDataSourceHolder.clear();
+	public void after(JoinPoint point) {
+		MethodSignature signature = (MethodSignature) point.getSignature();
+		Method method = signature.getMethod();
+		if (method.isAnnotationPresent(ShardingDataSource.class)) {
+			DynamicDataSourceHolder.clear();
+			return;
+		}
+		Class<?> clazz = point.getTarget().getClass();
+		if (clazz.isAnnotationPresent(ShardingDataSource.class)) {
+			DynamicDataSourceHolder.clear();
+		}
 	}
 
 }
