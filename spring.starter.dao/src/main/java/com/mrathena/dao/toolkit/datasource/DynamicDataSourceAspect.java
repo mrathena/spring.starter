@@ -32,7 +32,8 @@ public class DynamicDataSourceAspect {
 	 * 后置通知
 	 */
 	public void after() {
-		DynamicDataSourceHolder.set(DynamicDataSource.Key.DEFAULT);
+//		DynamicDataSourceHolder.set(DynamicDataSource.Key.DEFAULT);
+		DynamicDataSourceHolder.clear();
 	}
 
 }

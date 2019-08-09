@@ -18,7 +18,7 @@ public class CustomerTest extends BaseTest {
 	@Test
 	public void test() {
 		System.out.println(manager.queryById(1L));
-		System.out.println(manager.queryByCellphone(""));
+		System.out.println(manager.queryByCellphone("18234089811"));
 	}
 
 }

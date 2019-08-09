@@ -55,8 +55,8 @@
 	<!--动态切换数据源的切面-->
 	<bean id="dynamicDataSourceAspect" class="com.mrathena.dao.toolkit.datasource.DynamicDataSourceAspect"/>
 	<aop:config>
+		<aop:pointcut id="pointcut" expression="execution(* com.mrathena.manager.*.*(..))"/>
 		<aop:aspect ref="dynamicDataSourceAspect">
-			<aop:pointcut id="pointcut" expression="execution(* com.mrathena.manager.*.*(..))"/>
 			<aop:before method="before" pointcut-ref="pointcut"/>
 			<aop:after method="after" pointcut-ref="pointcut"/>
 		</aop:aspect>
