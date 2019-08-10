@@ -1,4 +1,4 @@
-package com.mrathena.test.dao;
+package com.mrathena.test.manager;
 
 import com.mrathena.manager.customer.CustomerManager;
 import com.mrathena.test.BaseTest;
@@ -10,16 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author mrathena on 2019-08-07 21:45
  */
 @Slf4j
-public class CustomerTest extends BaseTest {
+public class CustomerManagerTest extends BaseTest {
 
 	@Autowired
 	private CustomerManager manager;
 
 	@Test
 	public void test() {
-		System.out.println(manager.queryById(1L));
+		log.info("{}", manager.queryById(1L));
 		System.out.println("-------------");
-		System.out.println(manager.queryByCellphone("18234089811"));
+		log.info("{}", manager.queryByCellphone("18234089811"));
 	}
 
 }
