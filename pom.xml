@@ -13,7 +13,7 @@
 		<module>spring.starter.common</module>
 		<module>spring.starter.dao</module>
 		<module>spring.starter.manager</module>
-		<module>spring.starter.integration</module>
+		<module>spring.starter.rpc</module>
 		<module>spring.starter.api</module>
 		<module>spring.starter.biz</module>
 		<module>spring.starter.message</module>
@@ -42,7 +42,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.mrathena</groupId>
-				<artifactId>spring.starter.integration</artifactId>
+				<artifactId>spring.starter.rpc</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

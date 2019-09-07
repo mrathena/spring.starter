@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>spring.starter.integration</artifactId>
+			<artifactId>spring.starter.rpc</artifactId>
 		</dependency>
 	</dependencies>
 
