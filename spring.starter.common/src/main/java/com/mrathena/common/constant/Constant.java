@@ -3,12 +3,12 @@ package com.mrathena.common.constant;
 /**
  * @author mrathena on 2019/5/25 18:43
  */
-public class Constant {
+public final class Constant {
 
 	private Constant() {}
 
-	public static final String BLANK = " ";
 	public static final String EMPTY = "";
+	public static final String BLANK = " ";
 	public static final String COMMA = ",";
 	public static final String DOT = ".";
 	public static final String PLUS = "+";
@@ -26,7 +26,5 @@ public class Constant {
 	public static final String R_PARENTHESES = ")";
 	public static final String L_CURLY_BRACES = "{";
 	public static final String R_CURLY_BRACES = "}";
-
-	public static final String REDBAG = "REDBAG";
 
 }
