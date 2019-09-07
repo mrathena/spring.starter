@@ -12,18 +12,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DynamicDataSourceHolder {
 
-	private static final ThreadLocal<String> DATASOURCE = new ThreadLocal<>();
+	/**
+	 * 存的是动态数据源Map的key
+	 */
+	private static final ThreadLocal<String> KEY = new ThreadLocal<>();
 
 	public static String get() {
-		return DATASOURCE.get();
+		return KEY.get();
 	}
 
-	public static void set(DynamicDataSource.Key datasource) {
-		DATASOURCE.set(datasource.getCode());
+	/**
+	 * com.mrathena.dao.toolkit.datasource.DynamicDataSource.Key
+	 */
+	public static void set(String key) {
+		KEY.set(key);
 	}
 
 	public static void clear() {
-		DATASOURCE.remove();
+		KEY.remove();
 	}
 
 }

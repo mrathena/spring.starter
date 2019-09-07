@@ -1,6 +1,5 @@
 package com.mrathena.dao.toolkit.datasource;
 
-import com.mrathena.dao.toolkit.datasource.annotation.ShardingDataSource;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -17,30 +16,21 @@ public class DynamicDataSourceAspect {
 	public void before(JoinPoint point) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		Method method = signature.getMethod();
-		if (method.isAnnotationPresent(ShardingDataSource.class)) {
-			DynamicDataSourceHolder.set(DynamicDataSource.Key.SHARDING);
+		if (method.isAnnotationPresent(DataSource.class)) {
+			DynamicDataSourceHolder.set(method.getAnnotation(DataSource.class).value());
 			return;
 		}
-		Class<?> clazz = point.getTarget().getClass();
-		if (clazz.isAnnotationPresent(ShardingDataSource.class)) {
-			DynamicDataSourceHolder.set(DynamicDataSource.Key.SHARDING);
+		Class<?> clazz = point.getTarget().getClass().getInterfaces()[0];
+		if (clazz.isAnnotationPresent(DataSource.class)) {
+			DynamicDataSourceHolder.set(clazz.getAnnotation(DataSource.class).value());
 		}
 	}
 
 	/**
 	 * 后置通知
 	 */
-	public void after(JoinPoint point) {
-		MethodSignature signature = (MethodSignature) point.getSignature();
-		Method method = signature.getMethod();
-		if (method.isAnnotationPresent(ShardingDataSource.class)) {
-			DynamicDataSourceHolder.clear();
-			return;
-		}
-		Class<?> clazz = point.getTarget().getClass();
-		if (clazz.isAnnotationPresent(ShardingDataSource.class)) {
-			DynamicDataSourceHolder.clear();
-		}
+	public void after() {
+		DynamicDataSourceHolder.clear();
 	}
 
 }

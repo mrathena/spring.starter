@@ -1,7 +1,5 @@
 package com.mrathena.dao.toolkit.datasource;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -15,21 +13,13 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 	}
 
 	/**
-	 * 可用的动态数据源Key
+	 * 数据源key
 	 */
-	@Getter
-	@AllArgsConstructor
-	public enum Key {
-		/**
-		 * 默认数据源
-		 */
-		DEFAULT("datasource"),
-		/**
-		 * 分表数据源
-		 */
-		SHARDING("shardingDatasource");
-
-		private String code;
+	public final class Key {
+		public static final String DATASOURCE = "datasource";
+		public static final String DATASOURCE_2 = "datasource2";
+		public static final String SHARDING_DATASOURCE = "shardingDatasource";
+		public static final String SHARDING_DATASOURCE_2 = "shardingDatasource2";
 	}
 
 }

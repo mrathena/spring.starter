@@ -2,38 +2,48 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:sharding="http://shardingsphere.apache.org/schema/shardingsphere/sharding"
 	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:sharding="http://shardingsphere.apache.org/schema/shardingsphere/sharding"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/tx
 	   http://www.springframework.org/schema/tx/spring-tx.xsd
-	   http://shardingsphere.apache.org/schema/shardingsphere/sharding
-	   http://shardingsphere.apache.org/schema/shardingsphere/sharding/sharding.xsd
 	   http://www.springframework.org/schema/aop
-	   https://www.springframework.org/schema/aop/spring-aop.xsd">
+	   https://www.springframework.org/schema/aop/spring-aop.xsd
+	   http://shardingsphere.apache.org/schema/shardingsphere/sharding
+	   http://shardingsphere.apache.org/schema/shardingsphere/sharding/sharding.xsd">
 
-	<!--原始数据源-->
 	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/mrathena"/>
+		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/spring.starter"/>
 		<property name="username" value="root"/>
 		<property name="password" value="Hhsrv587.."/>
 	</bean>
 
-	<!--分片数据源-->
+	<bean id="datasource2" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/spring.starter"/>
+		<property name="username" value="root"/>
+		<property name="password" value="Hhsrv587.."/>
+	</bean>
+
 	<sharding:data-source id="shardingDatasource">
 		<sharding:sharding-rule data-source-names="datasource" default-data-source-name="datasource">
 			<sharding:table-rules>
-				<sharding:table-rule logic-table="sharding_table_demo_yearly"
-									 actual-data-nodes="datasource.sharding_table_demo_yearly_"
-									 table-strategy-ref="yearlyTableShardingStrategy"/>
-				<sharding:table-rule logic-table="sharding_table_demo_monthly"
-									 actual-data-nodes="datasource.sharding_table_demo_monthly_"
-									 table-strategy-ref="monthlyTableShardingStrategy"/>
-				<sharding:table-rule logic-table="sharding_table_demo_daily"
-									 actual-data-nodes="datasource.sharding_table_demo_daily_"
-									 table-strategy-ref="dailyTableShardingStrategy"/>
+				<sharding:table-rule logic-table="rebate_request" actual-data-nodes="datasource.rebate_request_" table-strategy-ref="yearlyTableShardingStrategy"/>
+				<sharding:table-rule logic-table="rebate_record" actual-data-nodes="datasource.rebate_record_" table-strategy-ref="yearlyTableShardingStrategy"/>
+			</sharding:table-rules>
+		</sharding:sharding-rule>
+		<sharding:props>
+			<prop key="sql.show">false</prop>
+		</sharding:props>
+	</sharding:data-source>
+
+	<sharding:data-source id="shardingDatasource2">
+		<sharding:sharding-rule data-source-names="datasource2" default-data-source-name="datasource2">
+			<sharding:table-rules>
+				<sharding:table-rule logic-table="rebate_request" actual-data-nodes="datasource2.rebate_request_" table-strategy-ref="yearlyTableShardingStrategy"/>
+				<sharding:table-rule logic-table="rebate_record" actual-data-nodes="datasource2.rebate_record_" table-strategy-ref="yearlyTableShardingStrategy"/>
 			</sharding:table-rules>
 		</sharding:sharding-rule>
 		<sharding:props>
@@ -47,6 +57,8 @@
 			<map key-type="java.lang.String">
 				<entry key="datasource" value-ref="datasource"/>
 				<entry key="shardingDatasource" value-ref="shardingDatasource"/>
+				<entry key="datasource2" value-ref="datasource2"/>
+				<entry key="shardingDatasource2" value-ref="shardingDatasource2"/>
 			</map>
 		</property>
 		<property name="defaultTargetDataSource" ref="datasource"/>
@@ -55,7 +67,7 @@
 	<!--动态切换数据源的切面-->
 	<bean id="dynamicDataSourceAspect" class="com.mrathena.dao.toolkit.datasource.DynamicDataSourceAspect"/>
 	<aop:config>
-		<aop:pointcut id="pointcut" expression="within(com.mrathena.manager..*)"/>
+		<aop:pointcut id="pointcut" expression="execution(* com.mrathena.dao.mapper..*Mapper.*(..))"/>
 		<aop:aspect ref="dynamicDataSourceAspect">
 			<aop:before method="before" pointcut-ref="pointcut"/>
 			<aop:after method="after" pointcut-ref="pointcut"/>
@@ -96,14 +108,8 @@
 	<bean id="preciseMatchTableShardingAlgorithm" class="com.mrathena.dao.algorithm.PreciseMatchTableShardingAlgorithm"/>
 
 	<!--常用分表策略,要求:分表键字段为:shard,如果是按日期分表,则shard类型为varchar长度为8,值为yyyyMMdd-->
-	<sharding:standard-strategy id="yearlyTableShardingStrategy" sharding-column="shard"
-								precise-algorithm-ref="yearlyTableShardingAlgorithm"
-								range-algorithm-ref="yearlyTableShardingAlgorithm"/>
-	<sharding:standard-strategy id="monthlyTableShardingStrategy" sharding-column="shard"
-								precise-algorithm-ref="monthlyTableShardingAlgorithm"
-								range-algorithm-ref="monthlyTableShardingAlgorithm"/>
-	<sharding:standard-strategy id="dailyTableShardingStrategy" sharding-column="shard"
-								precise-algorithm-ref="dailyTableShardingAlgorithm"
-								range-algorithm-ref="dailyTableShardingAlgorithm"/>
+	<sharding:standard-strategy id="yearlyTableShardingStrategy" sharding-column="shard" precise-algorithm-ref="yearlyTableShardingAlgorithm" range-algorithm-ref="yearlyTableShardingAlgorithm"/>
+	<sharding:standard-strategy id="monthlyTableShardingStrategy" sharding-column="shard" precise-algorithm-ref="monthlyTableShardingAlgorithm" range-algorithm-ref="monthlyTableShardingAlgorithm"/>
+	<sharding:standard-strategy id="dailyTableShardingStrategy" sharding-column="shard" precise-algorithm-ref="dailyTableShardingAlgorithm" range-algorithm-ref="dailyTableShardingAlgorithm"/>
 
 </beans>
