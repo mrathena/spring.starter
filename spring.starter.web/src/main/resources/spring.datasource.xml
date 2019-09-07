@@ -82,6 +82,8 @@
 			<bean class="org.apache.ibatis.session.Configuration">
 				<property name="mapUnderscoreToCamelCase" value="true"/>
 				<property name="useGeneratedKeys" value="true"/>
+				<!--可代替ShardingSphere的sql.show?? TODO-->
+				<!--<property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>-->
 			</bean>
 		</property>
 		<property name="plugins">
