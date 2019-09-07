@@ -139,13 +139,13 @@ public final class ExceptionHandler {
 		log.info(message);
 		log.error(message, exception);
 		if (ExceptionHandler.isDubboUnavailableException(exception)) {
-			return RemoteServiceException.unavailable("接口服务不可用");
+			return RemoteServiceException.unavailable(ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.getDesc());
 		} else if (ExceptionHandler.isDubboTimeoutException(exception)) {
-			return RemoteServiceException.timeout("接口调用超时");
+			return RemoteServiceException.timeout(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
 		} else if (exception instanceof RemoteServiceException) {
 			return (RemoteServiceException) exception;
 		} else {
-			return new ServiceException(ExceptionCode.INTEGRATION_ERROR.name(), exception.getMessage());
+			return new ServiceException(ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), exception.getMessage());
 		}
 	}
 

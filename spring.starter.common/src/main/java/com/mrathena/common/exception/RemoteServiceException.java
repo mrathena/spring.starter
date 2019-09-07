@@ -14,9 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public final class RemoteServiceException extends RuntimeException {
 
-	/**
-	 * 错误码
-	 */
 	private String code;
 
 	/**

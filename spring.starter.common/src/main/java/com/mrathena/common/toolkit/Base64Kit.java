@@ -5,7 +5,20 @@ import java.util.Base64;
 /**
  * @author mrathena on 2019/5/27 11:33
  */
-public class Base64Kit {
+public final class Base64Kit {
+
+	public static void main(String[] args) {
+		String mrathena = "mrathena";
+		System.out.println(encodeToString(mrathena));
+		System.out.println(encodeToString(mrathena.getBytes()));
+		System.out.println(new String(encode(mrathena)));
+		System.out.println(new String(encode(mrathena.getBytes())));
+		String after = encodeToString(mrathena);
+		System.out.println(decodeToString(after));
+		System.out.println(decodeToString(after.getBytes()));
+		System.out.println(new String(decode(after)));
+		System.out.println(new String(decode(after.getBytes())));
+	}
 
 	private Base64Kit() {}
 

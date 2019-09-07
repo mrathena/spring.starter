@@ -1,6 +1,8 @@
 package com.mrathena.common.toolkit;
 
 import com.jcraft.jsch.*;
+import com.mrathena.common.exception.ExceptionHandler;
+import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,7 +13,7 @@ import java.util.*;
  * @author mrathena on 2019/5/27 11:44
  */
 @Slf4j
-public class SftpKit {
+public final class SftpKit {
 
 	public static void main(String[] args) {
 		// TODO
@@ -34,7 +36,7 @@ public class SftpKit {
 	private static final String UP_PATH = "..";
 
 	/**
-	 * 连接sftp服务器
+	 * 连接sftp服务器,获取SFTP连接通道
 	 *
 	 * @param host     主机
 	 * @param port     端口
@@ -42,7 +44,7 @@ public class SftpKit {
 	 * @param password 密码
 	 */
 	public static ChannelSftp connect(String host, int port, String username, String password) {
-		log.info("开始连接SFTP服务器");
+		log.debug("SFTP: Try connect to sftp server {}:{}", host, port);
 		ChannelSftp sftp;
 		try {
 			JSch jsch = new JSch();
@@ -53,16 +55,18 @@ public class SftpKit {
 			sshConfig.put("StrictHostKeyChecking", "no");
 			session.setConfig(sshConfig);
 			session.connect();
-			log.info("Session connected");
+			log.debug("SFTP: Session connected");
 			Channel channel = session.openChannel("sftp");
 			channel.connect();
+			log.debug("SFTP: Channel connected");
 			sftp = (ChannelSftp) channel;
-			log.info("Connected to {}", host);
+			return sftp;
 		} catch (Exception e) {
-			log.error("Get sftp channel error", e);
-			throw new RuntimeException(e);
+			String message = ExceptionHandler.getClassAndMessage(e);
+			log.error(message, e);
+			throw new ServiceException(message);
 		}
-		return sftp;
+
 	}
 
 	/**
@@ -117,7 +121,7 @@ public class SftpKit {
 		}
 		// 下载文件
 		try (BufferedInputStream bis = new BufferedInputStream(is);
-			 BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(targetFile))
+		     BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(targetFile))
 		) {
 			int len;
 			byte[] buffer = new byte[4096];
@@ -289,17 +293,17 @@ public class SftpKit {
 	 */
 	public static void close(ChannelSftp sftp) {
 		try {
-			if (sftp != null) {
-				Session session = sftp.getSession();
-				if (sftp.isConnected()) {
-					sftp.disconnect();
-				}
-				if (session != null && session.isConnected()) {
-					session.disconnect();
-				}
+			Session session = sftp.getSession();
+			if (sftp.isConnected()) {
+				sftp.disconnect();
 			}
-		} catch (JSchException e) {
-			throw new RuntimeException(e);
+			if (session != null && session.isConnected()) {
+				session.disconnect();
+			}
+		} catch (Exception e) {
+			String message = ExceptionHandler.getClassAndMessage(e);
+			log.error(message, e);
+			throw new ServiceException(message);
 		}
 	}
 

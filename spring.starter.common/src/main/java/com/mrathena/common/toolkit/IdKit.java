@@ -10,7 +10,12 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author mrathena on 2019/5/27 11:17
  */
-public class IdKit {
+public final class IdKit {
+
+	public static void main(String[] args) {
+		System.out.println(IdKit.generateUUID());
+		System.out.println(IdKit.generateSerialNo());
+	}
 
 	private IdKit() {}
 
