@@ -10,17 +10,17 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.Properties;
-import java.util.Vector;
 
 /**
  * SFTP工具类
  * <p>
  * 提供单个文件的上传下载功能
- * cd,ls,rm,rmdir等命令可通过ChannelSftp直接执行, 无需开发对应功能
+ * cd,ls,rm,rmdir等命令比较简单,可通过ChannelSftp直接执行, 无需开发对应功能
  * <p>
  * 注意:
  * 1.ls在便利的时候需要做类型强转
  * 2.ls可以使用LsEntryFilter过滤掉[.][..]
+ * 3.sftp.cd(); 需要绝对路径
  * =========================================================
  * Vector ls = sftp.ls("/upload/test");
  * for (Object object : ls) {
@@ -36,18 +36,11 @@ import java.util.Vector;
 public final class SftpKit {
 
 	public static void main(String[] args) {
-		// TODO
 		try {
 			ChannelSftp sftp = SftpKit.connect("58.213.97.77", 22, "redbag_agencyrebate", "wpxikpIXg46i");
 			SftpKit.upload(sftp, new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx"), "/upload/test");
 			SftpKit.download(sftp, "/upload/test/20190908.值班记录.xlsx", new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx111"));
-			sftp.rm("/upload/test/20190908.值班记录.xlsx");
-
-
-			Vector<ChannelSftp.LsEntry> ls = sftp.ls("/upload/test");
-			System.out.println(ls.size());
-			ls.forEach(item -> System.out.println(item.getLongname()));
-			ls.forEach(item -> System.out.println(item.getFilename()));
+			SftpKit.delete(sftp, "/upload/test/20190908.值班记录.xlsx");
 			SftpKit.close(sftp);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +50,7 @@ public final class SftpKit {
 	private SftpKit() {}
 
 	/**
-	 * 连接sftp服务器,获取SFTP连接通道
+	 * 连接SFTP服务器,获取SFTP连接通道
 	 *
 	 * @param host     主机
 	 * @param port     端口
@@ -65,7 +58,7 @@ public final class SftpKit {
 	 * @param password 密码
 	 */
 	public static ChannelSftp connect(String host, int port, String username, String password) {
-		log.debug("SFTP: Try connect to sftp server {}:{}", host, port);
+		log.debug("SFTP: Connecting sftp server {}:{}", host, port);
 		ChannelSftp sftp;
 		try {
 			JSch jsch = new JSch();
@@ -91,17 +84,18 @@ public final class SftpKit {
 	}
 
 	/**
-	 * 上传单个文件到SFTP服务器的指定目录, 如果文件存在则会覆盖原文件
+	 * 上传文件,会覆盖原文件
 	 *
-	 * @param sftp          通道
-	 * @param file          要上传的本地文件
-	 * @param sftpDirectory SFTP服务器接收文件的目录, eg: "/upload/test"
+	 * @param sftp                        sftp
+	 * @param localFileAbsolutePath       本地文件绝对路径
+	 * @param remoteFileName              远程文件名称
+	 * @param remoteDirectoryAbsolutePath 远程目录绝对路径
 	 */
-	public static void upload(ChannelSftp sftp, File file, String sftpDirectory) {
+	public static void upload(ChannelSftp sftp, File localFileAbsolutePath, String remoteFileName, String remoteDirectoryAbsolutePath) {
 		try {
-			sftp.cd(sftpDirectory);
-			try (InputStream is = new FileInputStream(file)) {
-				sftp.put(is, file.getName());
+			sftp.cd(remoteDirectoryAbsolutePath);
+			try (InputStream inputStream = new FileInputStream(localFileAbsolutePath)) {
+				sftp.put(inputStream, remoteFileName);
 			}
 		} catch (Exception e) {
 			String message = ExceptionHandler.getClassAndMessage(e);
@@ -111,15 +105,26 @@ public final class SftpKit {
 	}
 
 	/**
-	 * 下载单个SFTP服务器文件到本地, 如果文件存在则会覆盖原文件
+	 * 上传文件,会覆盖原文件
 	 *
-	 * @param sftp         通道
-	 * @param sftpFilePath SFTP文件路径, eg: "/upload/test/test.csv"
-	 * @param file         目标文件,就是下载下来后就变成了这个文件
+	 * @param sftp                        sftp
+	 * @param localFileAbsolutePath       本地文件绝对路径
+	 * @param remoteDirectoryAbsolutePath 远程目录绝对路径
 	 */
-	private static void download(ChannelSftp sftp, String sftpFilePath, File file) {
-		try (BufferedInputStream bufferedInputStream = new BufferedInputStream(sftp.get(sftpFilePath));
-			 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file))
+	public static void upload(ChannelSftp sftp, File localFileAbsolutePath, String remoteDirectoryAbsolutePath) {
+		upload(sftp, localFileAbsolutePath, localFileAbsolutePath.getName(), remoteDirectoryAbsolutePath);
+	}
+
+	/**
+	 * 下载文件,会覆盖原文件
+	 *
+	 * @param sftp                   sftp
+	 * @param remoteFileAbsolutePath 远程文件绝对路径
+	 * @param localFileAbsolutePath  本地文件绝对路径
+	 */
+	private static void download(ChannelSftp sftp, String remoteFileAbsolutePath, File localFileAbsolutePath) {
+		try (BufferedInputStream bufferedInputStream = new BufferedInputStream(sftp.get(remoteFileAbsolutePath));
+			 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(localFileAbsolutePath))
 		) {
 			int len;
 			byte[] buffer = new byte[4096];
@@ -134,9 +139,25 @@ public final class SftpKit {
 	}
 
 	/**
-	 * 关闭通道和会话
+	 * 删除单个文件
 	 *
-	 * @param sftp 通道
+	 * @param sftp                   sftp
+	 * @param remoteFileAbsolutePath 远程文件绝对路径
+	 */
+	private static void delete(ChannelSftp sftp, String remoteFileAbsolutePath) {
+		try {
+			sftp.rm(remoteFileAbsolutePath);
+		} catch (Exception e) {
+			String message = ExceptionHandler.getClassAndMessage(e);
+			log.error(message, e);
+			throw new ServiceException(e, message);
+		}
+	}
+
+	/**
+	 * 关闭SFTP连接
+	 *
+	 * @param sftp sftp
 	 */
 	public static void close(ChannelSftp sftp) {
 		try {

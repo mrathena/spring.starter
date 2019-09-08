@@ -26,6 +26,16 @@
 			<groupId>com.mrathena</groupId>
 			<artifactId>spring.starter.task</artifactId>
 		</dependency>
+		<!--spring-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<!--jackson,redis序列化时用-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 		<!--test-->
 		<dependency>
 			<groupId>junit</groupId>
@@ -39,7 +49,6 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
