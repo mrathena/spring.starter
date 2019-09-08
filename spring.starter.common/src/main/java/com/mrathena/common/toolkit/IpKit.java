@@ -24,7 +24,7 @@ public final class IpKit {
 		} catch (Exception e) {
 			String message = ExceptionHandler.getClassAndMessage(e);
 			log.error(message, e);
-			throw new ServiceException(message);
+			throw new ServiceException(e, message);
 		}
 	}
 

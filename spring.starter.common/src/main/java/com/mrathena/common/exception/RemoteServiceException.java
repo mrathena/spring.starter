@@ -17,6 +17,16 @@ public final class RemoteServiceException extends RuntimeException {
 	private String code;
 
 	/**
+	 * 用于包装其他异常, 可以拿到原异常的完整信息
+	 * 私有化构造器,防止瞎用
+	 */
+	private RemoteServiceException(Throwable cause, String code, String message) {
+		super(message, cause);
+		this.code = code;
+	}
+
+	/**
+	 * 用于起始异常的主动抛出
 	 * 私有化构造器,防止瞎用
 	 */
 	private RemoteServiceException(String code, String message) {
@@ -24,37 +34,42 @@ public final class RemoteServiceException extends RuntimeException {
 		this.code = code;
 	}
 
-	/**
-	 * 超时异常
-	 */
-	public static RemoteServiceException timeout(String message) {
-		return new RemoteServiceException(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.name(), message);
+	public static RemoteServiceException unavailable(Throwable cause, String message) {
+		return new RemoteServiceException(cause, ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.name(), message);
 	}
 
-	/**
-	 * 超时异常
-	 */
-	public static RemoteServiceException timeout() {
-		return timeout(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
+	public static RemoteServiceException unavailable(Throwable cause) {
+		return unavailable(cause, ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.getDesc());
 	}
 
-	/**
-	 * 不可用异常
-	 */
 	public static RemoteServiceException unavailable(String message) {
 		return new RemoteServiceException(ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.name(), message);
 	}
 
-	/**
-	 * 不可用异常
-	 */
 	public static RemoteServiceException unavailable() {
 		return unavailable(ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.getDesc());
 	}
 
-	/**
-	 * 其他异常
-	 */
+	public static RemoteServiceException timeout(Throwable cause, String message) {
+		return new RemoteServiceException(cause, ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.name(), message);
+	}
+
+	public static RemoteServiceException timeout(Throwable cause) {
+		return timeout(cause, ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
+	}
+
+	public static RemoteServiceException timeout(String message) {
+		return new RemoteServiceException(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.name(), message);
+	}
+
+	public static RemoteServiceException timeout() {
+		return timeout(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
+	}
+
+	public static RemoteServiceException failure(Throwable cause, String message) {
+		return new RemoteServiceException(cause, ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), message);
+	}
+
 	public static RemoteServiceException failure(String message) {
 		return new RemoteServiceException(ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), message);
 	}

@@ -53,7 +53,7 @@ public final class Md5Kit {
 		} catch (Exception e) {
 			String message = ExceptionHandler.getClassAndMessage(e);
 			log.error(message, e);
-			throw new ServiceException(message);
+			throw new ServiceException(e, message);
 		}
 	}
 
