@@ -1,7 +1,6 @@
 package com.mrathena.common.toolkit;
 
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
-import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,9 +50,7 @@ public final class Md5Kit {
 			md.update(bytes);
 			return bufferToHex(md.digest());
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
