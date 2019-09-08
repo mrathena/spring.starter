@@ -21,14 +21,14 @@ import java.util.Properties;
  * 1.ls在便利的时候需要做类型强转
  * 2.ls可以使用LsEntryFilter过滤掉[.][..]
  * 3.sftp.cd(); 需要绝对路径
- * =========================================================
+ * =============================================================
  * Vector ls = sftp.ls("/upload/test");
  * for (Object object : ls) {
  * ----ChannelSftp.LsEntry entry = (ChannelSftp.LsEntry) object;
  * ----String filename = entry.getFilename();
  * ----...
  * }
- * =========================================================
+ * =============================================================
  *
  * @author mrathena on 2019/5/27 11:44
  */

@@ -15,7 +15,10 @@ import java.nio.charset.StandardCharsets;
  * 提供单个文件的上传下载功能
  * cd,ls,rm,rmdir等命令可通过ChannelSftp直接执行, 无需开发对应功能
  * 注意:
- * 1.ftp.changeWorkingDirectory(); 需要绝对路径
+ * 1.针对所有远程路径的操作都需要对文件名以ISO-8859-1编码
+ * =============================================================================================
+ * String filename = new String(remoteFileAbsolutePath.getBytes(), StandardCharsets.ISO_8859_1);
+ * =============================================================================================
  *
  * @author mrathena on 2019/5/27 11:44
  */
