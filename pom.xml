@@ -79,7 +79,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
-				<version>4.3.24.RELEASE</version>
+				<version>4.3.25.RELEASE</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>commons-logging</artifactId>
@@ -212,7 +212,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>
-				<version>1.8.20.RELEASE</version>
+				<version>1.8.23.RELEASE</version>
 			</dependency>
 			<!--kafka-->
 			<dependency>

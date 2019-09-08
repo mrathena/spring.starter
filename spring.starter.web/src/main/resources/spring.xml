@@ -7,6 +7,10 @@
 
 	<description>Spring Configuration</description>
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="configuration.properties"/>
+	</bean>
+
 	<context:component-scan base-package="com.mrathena">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>

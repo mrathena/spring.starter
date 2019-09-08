@@ -15,16 +15,16 @@
 
 	<bean id="datasource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/spring.starter"/>
-		<property name="username" value="root"/>
-		<property name="password" value="Hhsrv587.."/>
+		<property name="jdbcUrl" value="${datasource.first.jdbcUrl}"/>
+		<property name="username" value="${datasource.first.username}"/>
+		<property name="password" value="${datasource.first.password}"/>
 	</bean>
 
 	<bean id="datasource2" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="jdbcUrl" value="jdbc:mysql://116.62.162.47:3306/spring.starter"/>
-		<property name="username" value="root"/>
-		<property name="password" value="Hhsrv587.."/>
+		<property name="jdbcUrl" value="${datasource.second.jdbcUrl}"/>
+		<property name="username" value="${datasource.second.username}"/>
+		<property name="password" value="${datasource.second.password}"/>
 	</bean>
 
 	<sharding:data-source id="shardingDatasource">
@@ -82,8 +82,6 @@
 			<bean class="org.apache.ibatis.session.Configuration">
 				<property name="mapUnderscoreToCamelCase" value="true"/>
 				<property name="useGeneratedKeys" value="true"/>
-				<!--可代替ShardingSphere的sql.show?? TODO-->
-				<!--<property name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl"/>-->
 			</bean>
 		</property>
 		<property name="plugins">
