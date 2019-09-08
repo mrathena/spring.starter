@@ -1,14 +1,12 @@
 package com.mrathena.common.toolkit;
 
 import com.mrathena.common.exception.ServiceException;
-import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
 
 /**
  * @author mrathena on 2019/5/27 11:19
  */
-@Slf4j
 public final class IpKit {
 
 	public static void main(String[] args) {
