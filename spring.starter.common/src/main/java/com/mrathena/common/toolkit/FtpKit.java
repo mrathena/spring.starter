@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
  * 提供单个文件的上传下载功能
  * cd,ls,rm,rmdir等命令可通过ChannelSftp直接执行, 无需开发对应功能
  * 注意:
- * 1.针对所有远程路径的操作都需要对文件名以ISO-8859-1编码
+ * 1.针对所有远程路径的操作都需要对路径以ISO-8859-1编码
  * =============================================================================================
  * String filename = new String(remoteFileAbsolutePath.getBytes(), StandardCharsets.ISO_8859_1);
  * =============================================================================================
@@ -27,9 +27,9 @@ public final class FtpKit {
 
 	public static void main(String[] args) {
 		FTPClient ftp = FtpKit.connect("172.17.45.20", 21, "couponProduct", "couponProduct78@78F");
-		FtpKit.upload(ftp, new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx"), "/upload/test");
-		FtpKit.download(ftp, "/upload/test/20190908.值班记录.xlsx", new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.2.xlsx"));
-		FtpKit.delete(ftp, "/upload/test/20190908.值班记录.xlsx");
+		FtpKit.upload(ftp, new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx"), "/upload/你好");
+		FtpKit.download(ftp, "/upload/你好/20190908.值班记录.xlsx", new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.2.xlsx"));
+		FtpKit.delete(ftp, "/upload/你好/20190908.值班记录.xlsx");
 		FtpKit.close(ftp);
 	}
 
@@ -76,15 +76,16 @@ public final class FtpKit {
 	 */
 	public static void upload(FTPClient ftp, File localFileAbsolutePath, String remoteFileName, String remoteDirectoryAbsolutePath) {
 		try {
-			if (!ftp.changeWorkingDirectory(remoteDirectoryAbsolutePath)) {
+			String encodeRemoteDirectoryAbsolutePath = new String(remoteDirectoryAbsolutePath.getBytes(), StandardCharsets.ISO_8859_1);
+			if (!ftp.changeWorkingDirectory(encodeRemoteDirectoryAbsolutePath)) {
 				throw new ServiceException("change working directory unsuccessful, perhaps directory not exist");
 			}
 			ftp.setBufferSize(1024 * 1024 * 4);
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
 			ftp.enterLocalPassiveMode();
 			try (InputStream inputStream = new FileInputStream(localFileAbsolutePath)) {
-				String filename = new String(remoteFileName.getBytes(), StandardCharsets.ISO_8859_1);
-				if (!ftp.storeFile(filename, inputStream)) {
+				String encodeRemoteFileName = new String(remoteFileName.getBytes(), StandardCharsets.ISO_8859_1);
+				if (!ftp.storeFile(encodeRemoteFileName, inputStream)) {
 					throw new ServiceException("upload file unsuccessful, perhaps no permission");
 				}
 			}
