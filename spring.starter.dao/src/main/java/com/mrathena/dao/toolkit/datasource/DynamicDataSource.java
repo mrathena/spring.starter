@@ -4,7 +4,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
  * 如果一个方法中会切多个数据源,则该方法不能加事务注解@Transactional,
- * 不然数据源会保持在第一次切的那个数据源不在变化(不会调用determineCurrentLookupKey()),
+ * 不然数据源会保持在第一次切的那个数据源不再变化(不会调用determineCurrentLookupKey()),
  * 表现出来就是, 不停的set和clear, 但是没有get
  *
  * @author mrathena on 2019/8/8 22:16
