@@ -30,8 +30,8 @@
 	<sharding:data-source id="shardingDatasource">
 		<sharding:sharding-rule data-source-names="datasource" default-data-source-name="datasource">
 			<sharding:table-rules>
-				<sharding:table-rule logic-table="rebate_request" actual-data-nodes="datasource.rebate_request_" table-strategy-ref="yearlyTableShardingStrategy"/>
-				<sharding:table-rule logic-table="rebate_record" actual-data-nodes="datasource.rebate_record_" table-strategy-ref="yearlyTableShardingStrategy"/>
+				<sharding:table-rule table-strategy-ref="yearlyTableShardingStrategy" logic-table="rebate_request" actual-data-nodes="datasource.rebate_request_$->{2019..2020}"/>
+				<sharding:table-rule table-strategy-ref="yearlyTableShardingStrategy" logic-table="rebate_record" actual-data-nodes="datasource.rebate_record_$->{2019..2020}"/>
 			</sharding:table-rules>
 		</sharding:sharding-rule>
 		<sharding:props>
@@ -42,8 +42,8 @@
 	<sharding:data-source id="shardingDatasource2">
 		<sharding:sharding-rule data-source-names="datasource2" default-data-source-name="datasource2">
 			<sharding:table-rules>
-				<sharding:table-rule logic-table="rebate_request" actual-data-nodes="datasource2.rebate_request_" table-strategy-ref="yearlyTableShardingStrategy"/>
-				<sharding:table-rule logic-table="rebate_record" actual-data-nodes="datasource2.rebate_record_" table-strategy-ref="yearlyTableShardingStrategy"/>
+				<sharding:table-rule table-strategy-ref="yearlyTableShardingStrategy" logic-table="rebate_request" actual-data-nodes="datasource2.rebate_request_$->{2019..2020}"/>
+				<sharding:table-rule table-strategy-ref="yearlyTableShardingStrategy" logic-table="rebate_record" actual-data-nodes="datasource2.rebate_record_$->{2019..2020}"/>
 			</sharding:table-rules>
 		</sharding:sharding-rule>
 		<sharding:props>
@@ -105,7 +105,6 @@
 	<bean id="yearlyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.YearlyTableShardingAlgorithm"/>
 	<bean id="monthlyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.MonthlyTableShardingAlgorithm"/>
 	<bean id="dailyTableShardingAlgorithm" class="com.mrathena.dao.algorithm.DailyTableShardingAlgorithm"/>
-	<bean id="preciseMatchTableShardingAlgorithm" class="com.mrathena.dao.algorithm.PreciseMatchTableShardingAlgorithm"/>
 
 	<!--常用分表策略,要求:分表键字段为:shard,如果是按日期分表,则shard类型为varchar长度为8,值为yyyyMMdd-->
 	<sharding:standard-strategy id="yearlyTableShardingStrategy" sharding-column="shard" precise-algorithm-ref="yearlyTableShardingAlgorithm" range-algorithm-ref="yearlyTableShardingAlgorithm"/>
