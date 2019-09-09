@@ -1,6 +1,5 @@
 package com.mrathena.common.toolkit;
 
-import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTP;
@@ -60,9 +59,7 @@ public final class FtpKit {
 			log.debug("FTP: Get FTPClient successful");
 			return ftp;
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -90,9 +87,7 @@ public final class FtpKit {
 				}
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -135,9 +130,7 @@ public final class FtpKit {
 				}
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -154,9 +147,7 @@ public final class FtpKit {
 				throw new ServiceException("delete file unsuccessful, perhaps no permission or file not exist");
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -174,9 +165,7 @@ public final class FtpKit {
 				ftp.disconnect();
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 

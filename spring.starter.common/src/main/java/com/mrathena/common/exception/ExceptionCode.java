@@ -13,7 +13,7 @@ public enum ExceptionCode {
 	/**
 	 * 错误码
 	 */
-	ERROR("异常"),
+	EXCEPTION("异常"),
 	ILLEGAL_ARGUMENT("非法参数"),
 	ILLEGAL_STATUS("非法状态"),
 	REMOTE_SERVICE_UNAVAILABLE("远程服务不可用"),

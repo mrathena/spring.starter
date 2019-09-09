@@ -13,7 +13,7 @@ public final class ExceptionHandler {
 
 	public static void main(String[] args) {
 		try {
-			throw new ServiceException(ExceptionCode.ERROR);
+			throw new ServiceException(ExceptionCode.EXCEPTION);
 		} catch (Exception e) {
 			System.out.println(ExceptionHandler.getClassAndMessageWithoutCustomizedException(e));
 			System.out.println(ExceptionHandler.getDescriptionWithoutCustomizedException(e, "你猜"));
@@ -124,8 +124,8 @@ public final class ExceptionHandler {
 			response.setCode(remoteServiceException.getCode());
 			response.setMessage(remoteServiceException.getMessage());
 		} else {
-			response.setCode(ExceptionCode.ERROR.name());
-			response.setMessage(ExceptionCode.ERROR.getDesc());
+			response.setCode(ExceptionCode.EXCEPTION.name());
+			response.setMessage(ExceptionCode.EXCEPTION.getDesc());
 		}
 		return response;
 	}

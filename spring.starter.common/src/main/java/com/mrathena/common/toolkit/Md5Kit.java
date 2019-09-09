@@ -1,9 +1,7 @@
 package com.mrathena.common.toolkit;
 
 import com.alibaba.dubbo.common.utils.ConcurrentHashSet;
-import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.exception.ServiceException;
-import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +13,6 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 注意: MessageDigest 不是线程安全的, 不可以直接用成员变量, 每次使用需要重新获取实例 MessageDigest.getInstance(MD5);
  */
-@Slf4j
 public final class Md5Kit {
 
 	public static void main(String[] args) throws Exception {
@@ -51,9 +48,7 @@ public final class Md5Kit {
 			md.update(bytes);
 			return bufferToHex(md.digest());
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 

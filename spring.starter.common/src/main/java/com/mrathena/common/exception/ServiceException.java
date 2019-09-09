@@ -13,13 +13,17 @@ public final class ServiceException extends RuntimeException {
 	/**
 	 * 用于包装其他异常, 可以拿到原异常的完整信息
 	 */
-	public ServiceException(Throwable cause, String code, String message) {
-		super(message, cause);
+	public ServiceException(Exception exception, String code, String message) {
+		super(message, exception);
 		this.code = code;
 	}
 
-	public ServiceException(Throwable cause, String message) {
-		this(cause, ExceptionCode.ERROR.name(), message);
+	public ServiceException(Exception exception, String message) {
+		this(exception, ExceptionCode.EXCEPTION.name(), message);
+	}
+
+	public ServiceException(Exception exception) {
+		this(exception, ExceptionHandler.getClassAndMessageWithoutCustomizedException(exception));
 	}
 
 	/**
@@ -35,7 +39,7 @@ public final class ServiceException extends RuntimeException {
 	}
 
 	public ServiceException(String message) {
-		this(ExceptionCode.ERROR.name(), message);
+		this(ExceptionCode.EXCEPTION.name(), message);
 	}
 
 }

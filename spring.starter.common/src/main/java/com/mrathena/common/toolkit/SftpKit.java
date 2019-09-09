@@ -4,7 +4,6 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,9 +76,7 @@ public final class SftpKit {
 			log.debug("SFTP: Get ChannelSftp successful");
 			return sftp;
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -98,9 +95,7 @@ public final class SftpKit {
 				sftp.put(inputStream, remoteFileName);
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -132,9 +127,7 @@ public final class SftpKit {
 				bufferedOutputStream.write(buffer, 0, len);
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -148,9 +141,7 @@ public final class SftpKit {
 		try {
 			sftp.rm(remoteFileAbsolutePath);
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 
@@ -169,9 +160,7 @@ public final class SftpKit {
 				session.disconnect();
 			}
 		} catch (Exception e) {
-			String message = ExceptionHandler.getClassAndMessage(e);
-			log.error(message, e);
-			throw new ServiceException(e, message);
+			throw new ServiceException(e);
 		}
 	}
 

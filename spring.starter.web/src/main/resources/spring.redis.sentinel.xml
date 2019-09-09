@@ -32,13 +32,13 @@
 				</bean>
 			</set>
 		</property>
-		<!--<property name="database" value="${spring.redis.database}"/>
+		<property name="database" value="${spring.redis.database}"/>
 		<property name="password">
-			&lt;!&ndash;这里的of本不应该报红的&ndash;&gt;
+			<!--这里的of本不应该报红的-->
 			<bean class="org.springframework.data.redis.connection.RedisPassword" factory-method="of">
 				<constructor-arg name="passwordAsString" value="${spring.redis.password}"/>
 			</bean>
-		</property>-->
+		</property>
 	</bean>
 
 	<!--RedisConnectionFactory有两种SpringFramework实现类,JedisConnectionFactory/LettuceConnectionFactory-->
