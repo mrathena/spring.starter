@@ -37,10 +37,10 @@ public final class SftpKit {
 
 	public static void main(String[] args) {
 		try {
-			ChannelSftp sftp = SftpKit.connect("58.213.97.77", 22, "redbag_agencyrebate", "wpxikpIXg46i");
-			SftpKit.upload(sftp, new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx"), "/upload/test");
-			SftpKit.download(sftp, "/upload/test/20190908.值班记录.xlsx", new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx111"));
-			SftpKit.delete(sftp, "/upload/test/20190908.值班记录.xlsx");
+			ChannelSftp sftp = SftpKit.connect("172.17.45.20", 22, "redbagsftp", "redbagsftp78@78F");
+			SftpKit.upload(sftp, new File("C:\\Users\\mrathena\\Desktop\\java开发手册[华山版][1.5.0].pdf"), "/upload");
+			SftpKit.download(sftp, "/upload/java开发手册[华山版][1.5.0].pdf", new File("C:\\Users\\mrathena\\Desktop\\aaaaaaa.pdf"));
+			SftpKit.delete(sftp, "/upload/java开发手册[华山版][1.5.0].pdf");
 			SftpKit.close(sftp);
 		} catch (Exception e) {
 			e.printStackTrace();

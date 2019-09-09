@@ -26,10 +26,10 @@ import java.nio.charset.StandardCharsets;
 public final class FtpKit {
 
 	public static void main(String[] args) {
-		FTPClient ftp = FtpKit.connect("172.17.45.20", 21, "couponProduct", "couponProduct78@78F");
-		FtpKit.upload(ftp, new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.xlsx"), "/upload/你好");
-		FtpKit.download(ftp, "/upload/你好/20190908.值班记录.xlsx", new File("C:\\Users\\mrathena\\Desktop\\20190908.值班记录.2.xlsx"));
-		FtpKit.delete(ftp, "/upload/你好/20190908.值班记录.xlsx");
+		FTPClient ftp = FtpKit.connect("172.17.45.20", 21, "redbagftp", "redbagftp78@78F");
+		FtpKit.upload(ftp, new File("C:\\Users\\mrathena\\Desktop\\java开发手册[华山版][1.5.0].pdf"), "/upload");
+		FtpKit.download(ftp, "/upload/java开发手册[华山版][1.5.0].pdf", new File("C:\\Users\\mrathena\\Desktop\\aaaaaaa.pdf"));
+		FtpKit.delete(ftp, "/upload/java开发手册[华山版][1.5.0].pdf");
 		FtpKit.close(ftp);
 	}
 
