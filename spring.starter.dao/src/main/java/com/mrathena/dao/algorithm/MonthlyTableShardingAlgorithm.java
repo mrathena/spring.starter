@@ -1,5 +1,6 @@
 package com.mrathena.dao.algorithm;
 
+import com.google.common.collect.Range;
 import com.mrathena.dao.toolkit.ShardKit;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingAlgorithm;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
@@ -7,6 +8,8 @@ import org.apache.shardingsphere.api.sharding.standard.RangeShardingAlgorithm;
 import org.apache.shardingsphere.api.sharding.standard.RangeShardingValue;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 月分片算法
@@ -20,7 +23,13 @@ public class MonthlyTableShardingAlgorithm implements PreciseShardingAlgorithm<S
 	 */
 	@Override
 	public String doSharding(Collection<String> availableTargetNames, PreciseShardingValue<String> shardingValue) {
-		return ShardKit.doShardingInDate(ShardKit.DateShardingTypeEnum.MONTHLY, availableTargetNames, shardingValue);
+		String suffix = shardingValue.getValue().substring(0, 6);
+		for (String name : availableTargetNames) {
+			if (name.endsWith(suffix)) {
+				return name;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -28,7 +37,18 @@ public class MonthlyTableShardingAlgorithm implements PreciseShardingAlgorithm<S
 	 */
 	@Override
 	public Collection<String> doSharding(Collection<String> availableTargetNames, RangeShardingValue<String> shardingValue) {
-		return ShardKit.doShardingInDate(ShardKit.DateShardingTypeEnum.MONTHLY, availableTargetNames, shardingValue);
+		Range<String> range = shardingValue.getValueRange();
+		Set<String> shardingKeySet =
+				ShardKit.generateRangeShardingKeySet(ShardKit.DateShardingTypeEnum.MONTHLY, range.lowerEndpoint(), range.upperEndpoint());
+		Set<String> tableNameSet = new HashSet<>(availableTargetNames.size());
+		for (String name : availableTargetNames) {
+			for (String suffix : shardingKeySet) {
+				if (name.endsWith(suffix)) {
+					tableNameSet.add(name);
+				}
+			}
+		}
+		return tableNameSet;
 	}
 
 }
