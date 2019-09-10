@@ -18,18 +18,16 @@ public final class RemoteServiceException extends RuntimeException {
 
 	/**
 	 * 用于包装其他异常, 可以拿到原异常的完整信息
-	 * 私有化构造器,防止瞎用
 	 */
-	private RemoteServiceException(Exception exception, String code, String message) {
+	public RemoteServiceException(Exception exception, String code, String message) {
 		super(message, exception);
 		this.code = code;
 	}
 
 	/**
 	 * 用于起始异常的主动抛出
-	 * 私有化构造器,防止瞎用
 	 */
-	private RemoteServiceException(String code, String message) {
+	public RemoteServiceException(String code, String message) {
 		super(message);
 		this.code = code;
 	}
