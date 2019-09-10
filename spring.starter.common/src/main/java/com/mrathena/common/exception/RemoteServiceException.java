@@ -88,11 +88,4 @@ public final class RemoteServiceException extends RuntimeException {
 		return ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.name().equals(code);
 	}
 
-	/**
-	 * 判断RemoteServiceException是否是失败异常
-	 */
-	public boolean isFailure() {
-		return ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name().equals(code);
-	}
-
 }
