@@ -3,9 +3,9 @@ package com.mrathena.dao.toolkit.datasource;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
- * 如果一个方法中会切多个数据源,则该方法不能加事务注解@Transactional,
- * 不然数据源会保持在第一次切的那个数据源不再变化(不会调用determineCurrentLookupKey()),
- * 表现出来就是, 不停的set和clear, 但是没有get
+ * 如果一个方法加了注解@Transactional, 那么该方法内数据源的切换将会失效,
+ * 第一条sql用到的那个数据源会被事务代理对象缓存起来, 后续sql直接使用, 而不会重新创建链接
+ * 表现出来就是, DynamicDataSourceHolder 的 set 和 clear 方法在不停调用, 但是中间没有 get 方法的调用
  *
  * @author mrathena on 2019/8/8 22:16
  */
