@@ -135,17 +135,14 @@ public final class ExceptionHandler {
 	 * throw ExceptionHandler.handleRpcException(e);
 	 */
 	public static RuntimeException handleRpcException(Exception exception) {
-		String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(exception);
-		log.info(message);
-		log.error(message, exception);
 		if (ExceptionHandler.isDubboUnavailableException(exception)) {
-			return RemoteServiceException.unavailable(ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.getDesc());
+			return RemoteServiceException.unavailable(exception, ExceptionCode.REMOTE_SERVICE_UNAVAILABLE.getDesc());
 		} else if (ExceptionHandler.isDubboTimeoutException(exception)) {
-			return RemoteServiceException.timeout(ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
+			return RemoteServiceException.timeout(exception, ExceptionCode.REMOTE_SERVICE_INVOKE_TIMEOUT.getDesc());
 		} else if (exception instanceof RemoteServiceException) {
 			return (RemoteServiceException) exception;
 		} else {
-			return new ServiceException(ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), exception.getMessage());
+			return new RemoteServiceException(exception, ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), exception.getMessage());
 		}
 	}
 
