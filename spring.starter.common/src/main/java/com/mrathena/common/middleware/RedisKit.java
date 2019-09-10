@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class Redis {
+public class RedisKit {
 
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
