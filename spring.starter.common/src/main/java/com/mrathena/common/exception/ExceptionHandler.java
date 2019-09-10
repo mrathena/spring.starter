@@ -142,7 +142,7 @@ public final class ExceptionHandler {
 		} else if (exception instanceof RemoteServiceException) {
 			return (RemoteServiceException) exception;
 		} else {
-			return new RemoteServiceException(exception, ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), exception.getMessage());
+			return RemoteServiceException.failure(exception, ExceptionCode.REMOTE_SERVICE_INVOKE_FAILURE.name(), exception.getMessage());
 		}
 	}
 
