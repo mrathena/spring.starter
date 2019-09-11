@@ -13,22 +13,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class IdKit {
 
 	public static void main(String[] args) {
-		System.out.println(IdKit.generateUUID());
-		System.out.println(IdKit.generateSerialNo());
+		System.out.println(IdKit.getUUID());
+		System.out.println(IdKit.getSerialNo());
 	}
 
 	private IdKit() {}
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-	public static String generateUUID() {
+	public static String getUUID() {
 		return UUID.randomUUID().toString().replace(Constant.MINUS, Constant.EMPTY);
 	}
 
 	/**
 	 * 生成32位长度的只有数字的流水号
 	 */
-	public static String generateSerialNo() {
+	public static String getSerialNo() {
 		String part = LocalDateTime.now().format(FORMATTER);
 		// 留下其微秒位和纳秒位, 1毫秒=1000微秒=1000000纳秒
 		String part2 = String.valueOf(System.nanoTime());

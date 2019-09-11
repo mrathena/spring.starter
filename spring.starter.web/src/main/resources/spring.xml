@@ -17,7 +17,8 @@
 	</context:component-scan>
 
 	<import resource="spring.datasource.xml"/>
-	<import resource="spring.redis.sentinel.xml"/>
+	<import resource="spring.redis.standalone.xml"/>
+	<!--<import resource="spring.redis.sentinel.xml"/>-->
 	<!--<import resource="spring.redis.cluster.xml"/>-->
 
 </beans>
