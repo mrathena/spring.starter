@@ -13,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class IdKit {
 
 	public static void main(String[] args) {
-		System.out.println(IdKit.getUUID());
+		System.out.println(IdKit.getUuid());
 		System.out.println(IdKit.getSerialNo());
 	}
 
@@ -21,7 +21,7 @@ public final class IdKit {
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-	public static String getUUID() {
+	public static String getUuid() {
 		return UUID.randomUUID().toString().replace(Constant.MINUS, Constant.EMPTY);
 	}
 

@@ -53,7 +53,7 @@ public final class FtpKit {
 				log.debug("FTP: Login unsuccessful");
 				ftp.disconnect();
 				log.debug("FTP: Disconnected");
-				throw new ServiceException("Invalid username or password");
+				throw new ServiceException("Invalid username or password", "连不上服务器,可能是账号密码不对");
 			}
 			log.debug("FTP: Logged in");
 			log.debug("FTP: Get FTPClient successful");
@@ -75,7 +75,7 @@ public final class FtpKit {
 		try {
 			String encodeRemoteDirectoryAbsolutePath = new String(remoteDirectoryAbsolutePath.getBytes(), StandardCharsets.ISO_8859_1);
 			if (!ftp.changeWorkingDirectory(encodeRemoteDirectoryAbsolutePath)) {
-				throw new ServiceException("change working directory unsuccessful, perhaps directory not exist");
+				throw new ServiceException("change working directory unsuccessful, perhaps directory not exist", "切换工作路径失败,可能是目标路径不存在");
 			}
 			ftp.setBufferSize(1024 * 1024 * 4);
 			ftp.setFileType(FTP.BINARY_FILE_TYPE);
@@ -83,7 +83,7 @@ public final class FtpKit {
 			try (InputStream inputStream = new FileInputStream(localFileAbsolutePath)) {
 				String encodeRemoteFileName = new String(remoteFileName.getBytes(), StandardCharsets.ISO_8859_1);
 				if (!ftp.storeFile(encodeRemoteFileName, inputStream)) {
-					throw new ServiceException("upload file unsuccessful, perhaps no permission");
+					throw new ServiceException("upload file unsuccessful, perhaps no permission", "上传文件失败,可能是没有权限");
 				}
 			}
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public final class FtpKit {
 							log.debug("FTP: delete temp file unsuccessful");
 						}
 					}
-					throw new ServiceException("download file unsuccessful, perhaps file not exist");
+					throw new ServiceException("download file unsuccessful, perhaps file not exist", "下载文件失败,可能是要目标文件不存在");
 				}
 			}
 		} catch (Exception e) {
@@ -144,7 +144,7 @@ public final class FtpKit {
 		try {
 			String filename = new String(remoteFileAbsolutePath.getBytes(), StandardCharsets.ISO_8859_1);
 			if (!ftp.deleteFile(filename)) {
-				throw new ServiceException("delete file unsuccessful, perhaps no permission or file not exist");
+				throw new ServiceException("delete file unsuccessful, perhaps no permission or file not exist", "删除文件失败,可能是没有权限或目标文件不存在");
 			}
 		} catch (Exception e) {
 			throw new ServiceException(e);
@@ -160,7 +160,7 @@ public final class FtpKit {
 		try {
 			if (ftp.isConnected()) {
 				if (!ftp.logout()) {
-					throw new ServiceException("ftp close unsuccessful, perhaps ftp being occupied");
+					throw new ServiceException("ftp close unsuccessful, perhaps ftp being occupied", "关闭连接失败,可能是连接在占用中");
 				}
 				ftp.disconnect();
 			}

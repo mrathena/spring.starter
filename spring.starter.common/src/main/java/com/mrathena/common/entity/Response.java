@@ -20,10 +20,12 @@ public class Response<T> implements Serializable {
 	private T result;
 	private String code;
 	private String message;
+	private String description;
 
 	private String originalCode;
 	private String originalMessage;
-	private String originalServerIp;
+	private String originalDescription;
+	private String originalIp;
 
 	public Response() {}
 
@@ -32,20 +34,32 @@ public class Response<T> implements Serializable {
 		this.result = result;
 	}
 
-	public Response(String code, String message) {
+	public Response(String code, String message, String description) {
 		this.success = false;
 		this.code = code;
 		this.message = message;
+		this.description = description;
+	}
+
+	public Response(String code, String message) {
+		this(code, message, null);
+	}
+
+	public Response(String code, String message, String description,
+	                String originalCode, String originalMessage, String originalDescription, String originalIp) {
+		this.success = false;
+		this.code = code;
+		this.message = message;
+		this.description = description;
+		this.originalCode = originalCode;
+		this.originalMessage = originalMessage;
+		this.originalDescription = originalDescription;
+		this.originalIp = originalIp;
 	}
 
 	public Response(String code, String message,
-	                String originalCode, String originalMessage, String originalServerIp) {
-		this.success = false;
-		this.code = code;
-		this.message = message;
-		this.originalCode = originalCode;
-		this.originalMessage = originalMessage;
-		this.originalServerIp = originalServerIp;
+	                String originalCode, String originalMessage, String originalIp) {
+		this(code, message, null, originalCode, originalMessage, null, originalIp);
 	}
 
 	public boolean isSuccess() {

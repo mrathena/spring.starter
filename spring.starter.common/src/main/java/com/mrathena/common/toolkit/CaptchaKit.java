@@ -8,15 +8,10 @@ package com.mrathena.common.toolkit;
 public final class CaptchaKit {
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
-			System.out.println(CaptchaKit.generateCaptcha(6));
-		}
-		System.out.println();
-		for (int i = 0; i < 10; i++) {
-			System.out.println(generateCaptcha(CaptchaKit.CaptchaType.NUMBER, "***-****"));
-			System.out.println(generateCaptcha(CaptchaKit.CaptchaType.LETTER, "***-****"));
-			System.out.println(generateCaptcha(CaptchaKit.CaptchaType.MIXTURE, "***-****"));
-		}
+		System.out.println(CaptchaKit.generateCaptcha(6));
+		System.out.println(generateCaptcha(CaptchaKit.CaptchaType.NUMBER, "***-****"));
+		System.out.println(generateCaptcha(CaptchaKit.CaptchaType.LETTER, "***-****"));
+		System.out.println(generateCaptcha(CaptchaKit.CaptchaType.MIXTURE, "***-****"));
 	}
 
 	private CaptchaKit() {}
