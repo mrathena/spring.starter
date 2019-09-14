@@ -26,5 +26,7 @@ public final class Constant {
 	public static final String R_PARENTHESES = ")";
 	public static final String L_CURLY_BRACES = "{";
 	public static final String R_CURLY_BRACES = "}";
+	public static final String AND = "&";
+	public static final String QUESTION = "?";
 
 }

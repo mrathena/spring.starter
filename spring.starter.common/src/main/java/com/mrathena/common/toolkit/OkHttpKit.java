@@ -1,6 +1,5 @@
 package com.mrathena.common.toolkit;
 
-import lombok.ToString;
 import okhttp3.*;
 
 import java.io.File;
@@ -12,47 +11,67 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author mrathena
  */
-@ToString
 public final class OkHttpKit {
 
 	public static void main(String[] args) throws Exception {
-		System.out.println(OkHttpKit.get("https://www.google.com.hk").execute());;
+		System.out.println(OkHttpKit.get("https://www.google.com.hk").execute());
 	}
 
 	private OkHttpKit() {}
 
-	// 默认超时时间
-	private static final int CONNECT_TIMEOUT = 10000;// 默认毫秒,获取连接用
-	private static final int READ_TIMEOUT = 10000;// 默认毫秒,下载文件用
-	private static final int WRITE_TIMEOUT = 10000;// 默认毫秒,上传文件用
+	/**
+	 * 默认超时时间
+	 */
+	// 默认毫秒,获取连接用
+	private static final int CONNECT_TIMEOUT = 10000;
+	// 默认毫秒,下载文件用
+	private static final int READ_TIMEOUT = 10000;
+	// 默认毫秒,上传文件用
+	private static final int WRITE_TIMEOUT = 10000;
 
-	// 请求方式
+	/**
+	 * 请求方式
+	 */
 	private static final String GET = "GET";
 	private static final String POST = "POST";
 
-	// 媒体类型
+	/**
+	 * 媒体类型
+	 */
 	private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 	private static final MediaType MEDIA_TYPE_FILE = MediaType.parse("application/octet-stream");
 
 	private volatile static OkHttpClient instance = null;
 
-	// OkHttpRequest参数
-	private int connectTimeout = CONNECT_TIMEOUT;// 默认毫秒,获取连接用
-	private int readTimeout = READ_TIMEOUT;// 默认毫秒,下载文件用
-	private int writeTimeout = WRITE_TIMEOUT;// 默认毫秒,上传文件用
+	/**
+	 * OkHttpRequest参数
+	 */
+	// 默认毫秒,获取连接用
+	private int connectTimeout = CONNECT_TIMEOUT;
+	// 默认毫秒,下载文件用
+	private int readTimeout = READ_TIMEOUT;
+	// 默认毫秒,上传文件用
+	private int writeTimeout = WRITE_TIMEOUT;
 
-	// Request参数
+	/**
+	 * Request参数
+	 */
 	private String url;
 	private String method;
-	private Map<String, String> headers;// request
-	private Map<String, Object> parameters;// get/post
+	private Map<String, String> headers;
+	// get/post
+	private Map<String, Object> parameters;
 	// map key-file 可多个entity
-	private Map<String, File> fileMap;// 一个key对应一个file / post
+	// 一个key对应一个file / post
+	private Map<String, File> fileMap;
 	// map key-List<file> 只一个entity
-	private String fileListKey;// fileList的key / post
-	private List<File> fileList;// key为fileKey / post
+	// fileList的key / post
+	private String fileListKey;
+	// key为fileKey / post
+	private List<File> fileList;
 	// map key-List<file> 可多个entity
-	private Map<String, List<File>> fileListMap;// 多组key.List<File> / post
+	// 多组key.List<File> / post
+	private Map<String, List<File>> fileListMap;
 	// json
 	private String json;
 
