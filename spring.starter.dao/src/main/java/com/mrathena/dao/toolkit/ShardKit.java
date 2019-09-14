@@ -1,6 +1,7 @@
 package com.mrathena.dao.toolkit;
 
 import com.google.common.collect.Range;
+import com.mrathena.common.exception.ExceptionCode;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.api.sharding.standard.PreciseShardingValue;
@@ -60,7 +61,7 @@ public final class ShardKit {
 			case DAILY:
 				return shardingValue;
 			default:
-				throw new ServiceException("未知日期分片模式");
+				throw new ServiceException(ExceptionCode.EXCEPTION.getMessage(), "未知日期分片模式");
 		}
 	}
 
@@ -103,7 +104,7 @@ public final class ShardKit {
 			case DAILY:
 				return dateString;
 			default:
-				throw new ServiceException("未知日期分片模式");
+				throw new ServiceException(ExceptionCode.EXCEPTION.getMessage(), "未知日期分片模式");
 		}
 	}
 
@@ -133,7 +134,7 @@ public final class ShardKit {
 			case DAILY:
 				return FORMATTER_DAILY;
 			default:
-				throw new ServiceException("未知日期分片模式");
+				throw new ServiceException(ExceptionCode.EXCEPTION.getMessage(), "未知日期分片模式");
 		}
 	}
 
@@ -149,7 +150,7 @@ public final class ShardKit {
 			case DAILY:
 				return localDate.plusDays(1);
 			default:
-				throw new ServiceException("未知日期分片模式");
+				throw new ServiceException(ExceptionCode.EXCEPTION.getMessage(), "未知日期分片模式");
 		}
 	}
 
