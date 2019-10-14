@@ -38,6 +38,13 @@ public final class ExceptionHandler {
 			{ServiceException.class, RemoteServiceException.class};
 
 	/**
+	 * 获取异常的堆栈信息
+	 */
+	public static String getStackTrace(Throwable throwable) {
+		return ExceptionUtils.getStackTrace(throwable);
+	}
+
+	/**
 	 * 获取根源异常的堆栈信息
 	 */
 	public static String getRootCauseStackTrace(Throwable throwable) {
