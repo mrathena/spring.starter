@@ -19,16 +19,16 @@
 		<property name="sentinels">
 			<set>
 				<bean class="org.springframework.data.redis.connection.RedisNode">
-					<constructor-arg name="host" value="${spring.redis.sentinel.first.host}"/>
-					<constructor-arg name="port" value="${spring.redis.sentinel.first.port}"/>
+					<constructor-arg name="host" value="${spring.redis.sentinel.1.host}"/>
+					<constructor-arg name="port" value="${spring.redis.sentinel.1.port}"/>
 				</bean>
 				<bean class="org.springframework.data.redis.connection.RedisNode">
-					<constructor-arg name="host" value="${spring.redis.sentinel.second.host}"/>
-					<constructor-arg name="port" value="${spring.redis.sentinel.second.port}"/>
+					<constructor-arg name="host" value="${spring.redis.sentinel.2.host}"/>
+					<constructor-arg name="port" value="${spring.redis.sentinel.2.port}"/>
 				</bean>
 				<bean class="org.springframework.data.redis.connection.RedisNode">
-					<constructor-arg name="host" value="${spring.redis.sentinel.third.host}"/>
-					<constructor-arg name="port" value="${spring.redis.sentinel.third.port}"/>
+					<constructor-arg name="host" value="${spring.redis.sentinel.3.host}"/>
+					<constructor-arg name="port" value="${spring.redis.sentinel.3.port}"/>
 				</bean>
 			</set>
 		</property>
@@ -59,8 +59,15 @@
 		<property name="hashValueSerializer" ref="genericJackson2JsonRedisSerializer"/>
 	</bean>
 
-	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-		<property name="connectionFactory" ref="jedisConnectionFactory"/>
+<!--	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">-->
+<!--		<property name="connectionFactory" ref="jedisConnectionFactory"/>-->
+<!--	</bean>-->
+
+	<!-- 配置RedisCacheManager -->
+	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg name="redisOperations" ref="redisTemplate"/>
+		<!--默认过期时间,单位秒,一天:60*60*24=86400-->
+		<property name="defaultExpiration" value="86400"/>
 	</bean>
 
 </beans>

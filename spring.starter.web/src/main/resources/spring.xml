@@ -16,9 +16,11 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
 	</context:component-scan>
 
+	<!--数据源-->
 	<import resource="spring.datasource.xml"/>
+	<!--Redis-->
 	<import resource="spring.redis.standalone.xml"/>
-	<!--<import resource="spring.redis.sentinel.xml"/>-->
-	<!--<import resource="spring.redis.cluster.xml"/>-->
+<!--	<import resource="spring.redis.sentinel.xml"/>-->
+<!--	<import resource="spring.redis.cluster.xml"/>-->
 
 </beans>
