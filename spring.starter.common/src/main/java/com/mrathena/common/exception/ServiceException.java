@@ -17,6 +17,9 @@ public class ServiceException extends RuntimeException {
 	private String code;
 	private String description;
 
+	/**
+	 * 用于主动捕获
+	 */
 	public ServiceException(Throwable throwable) {
 		super(throwable.getMessage(), throwable);
 		if (throwable instanceof ServiceException) {
@@ -29,12 +32,12 @@ public class ServiceException extends RuntimeException {
 			this.description = exception.getDescription();
 		} else {
 			this.code = ExceptionCode.EXCEPTION.name();
-			this.description = ExceptionHandler.getRootCauseStackTrace(throwable);
+			this.description = ExceptionHandler.getStackTrace(throwable);
 		}
 	}
 
 	/**
-	 * 用于起始异常的主动抛出
+	 * 用于主动抛出
 	 */
 	public ServiceException(String code, String message, String description) {
 		super(message);
@@ -42,10 +45,16 @@ public class ServiceException extends RuntimeException {
 		this.description = description;
 	}
 
+	/**
+	 * 用于主动抛出
+	 */
 	public ServiceException(ExceptionCode exceptionCode) {
 		this(exceptionCode.name(), exceptionCode.getMessage(), exceptionCode.getDescription());
 	}
 
+	/**
+	 * 用于主动抛出
+	 */
 	public ServiceException(String message, String description) {
 		this(ExceptionCode.EXCEPTION.name(), message, description);
 	}
